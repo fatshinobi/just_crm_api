@@ -14,7 +14,9 @@ gem 'puma', '~> 4.1'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'mongoid', '~> 7.0.5'
+gem 'mongoid-locker', '~> 1.0'
 gem 'rspec-rails'
+gem 'devise_token_auth'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
