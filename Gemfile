@@ -15,7 +15,6 @@ gem 'puma', '~> 4.1'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'mongoid', '~> 7.0.5'
 gem 'mongoid-locker', '~> 1.0'
-gem 'rspec-rails'
 gem 'devise_token_auth'
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -27,6 +26,13 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'database_cleaner-mongo'
 end
 
 group :development do
