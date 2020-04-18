@@ -83,6 +83,15 @@ RSpec.describe "Customer", :type => :model do
       end
 
     end
+
+    it 'have people' do
+      @customer.people << FactoryBot.create(:person, name: 'person 1')
+      @customer.people << FactoryBot.create(:person, name: 'person 2')
+
+      expect(@customer.people.size).to eq 2
+      expect(@customer.people.detect{|rec| rec.name == 'person 1'}).not_to be false
+      expect(@customer.people.detect{|rec| rec.name == 'person 2'}).not_to be false
+    end
   end
 
 end
