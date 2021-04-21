@@ -17,6 +17,7 @@ gem 'mongoid', '~> 7.0.5'
 gem 'mongoid-locker', '~> 1.0'
 gem 'devise_token_auth'
 gem 'mongoid_taggable'
+gem 'rack-cors'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
