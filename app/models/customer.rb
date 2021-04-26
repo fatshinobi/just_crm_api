@@ -13,4 +13,6 @@ class Customer
   validates :name, length: {minimum: 3}
 
   index({ name: 1 }, { name: 'name_index', unique: true, background: true })
+
+  scope :unremoved, -> { not_in(condition: Conditionable.condition_index(:removed)) }
 end

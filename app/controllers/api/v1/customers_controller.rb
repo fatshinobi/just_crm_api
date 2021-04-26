@@ -1,7 +1,15 @@
 class Api::V1::CustomersController < Api::V1::ApplicationController
   def index
-    customers = Customer.pluck(:_id, :name).map{ |rec| {id: rec[0].to_s, name: rec[1]} }
+    customers = Customer.unremoved.pluck(:_id, :name).map{ |rec| {id: rec[0].to_s, name: rec[1]} }
     render json: customers, status: :ok
+  end
+
+  def show
+    customer = Customer.find(params[:id])
+    render json: {
+      id: customer.id,
+      name: customer.name
+    }, status: :ok
   end
 
   def create
@@ -9,12 +17,34 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
 
     if customer.save
       render json: { 
-        id: customer._id.to_s, 
+        id: customer._id.to_s,
         name: customer.name
       }, status: :created
     else
       render json: customer.errors, status: :unprocessable_entity
     end
+  end
+
+  def update
+    customer = Customer.find(params[:id])
+    customer.assign_attributes(customer_params)
+
+    if customer.save
+      render json: { 
+        id: customer._id.to_s,
+        name: customer.name
+      }, status: :accepted
+    else
+      render json: customer.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    customer = Customer.find(params[:id])
+    customer.set_condition(:removed)
+    customer.save
+
+    #head: :no_content
   end
 
   private
