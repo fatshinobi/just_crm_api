@@ -58,7 +58,7 @@ RSpec.describe "Person", :type => :model do
         tags = 'tag 1, tag 2, tag 3'
         @person.tags = tags
         @person.save
-        byebug
+
         @person.reload
       end
 

@@ -85,6 +85,7 @@ RSpec.describe "Customer", :type => :model do
     end
 
     it 'have people' do
+      @customer.people.delete_all
       @customer.people << FactoryBot.create(:person, name: 'person 1')
       @customer.people << FactoryBot.create(:person, name: 'person 2')
 

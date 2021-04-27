@@ -7,7 +7,7 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
   def show
     customer = Customer.find(params[:id])
     render json: {
-      id: customer.id,
+      id: customer.id.to_s,
       name: customer.name
     }, status: :ok
   end
@@ -44,7 +44,7 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
     customer.set_condition(:removed)
     customer.save
 
-    #head: :no_content
+    render json: {}, status: :ok
   end
 
   private
