@@ -32,14 +32,18 @@ RSpec.describe "Customers", :type => :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'returns right qty of records' do
-      expect(JSON.parse(response.body)['name']).to eq 'test 1'
+    it 'returns right record' do
+      expect(JSON.parse(response.body)).to eq ({
+        'id' => @customer.id.to_s,
+        'name' => 'test 1'
+      })
     end
   end
 
   describe 'post /api/v1/customers' do
     before do
       post '/api/v1/customers', params: { customer: {name: 'test name 1'} }, headers: @auth_headers
+      @customer = Customer.first
     end
 
     it 'returns created' do
@@ -47,9 +51,16 @@ RSpec.describe "Customers", :type => :request do
     end
 
     it 'creates right record' do
-      customer = Customer.first
-      expect(customer.name).to eq 'test name 1'
+      expect(@customer.name).to eq 'test name 1'
     end
+
+    it 'returns right record' do
+      expect(JSON.parse(response.body)).to eq ({
+        'id' => @customer.id.to_s,
+        'name' => 'test name 1'
+      })
+    end
+
   end
 
   describe 'patch /api/v1/customers' do
@@ -66,6 +77,14 @@ RSpec.describe "Customers", :type => :request do
       @customer.reload
       expect(@customer.name).to eq 'test 2'
     end
+
+    it 'returns right record' do
+      expect(JSON.parse(response.body)).to eq ({
+        'id' => @customer.id.to_s,
+        'name' => 'test 2'
+      })
+    end
+
   end
 
   describe 'delete /api/v1/customers/id' do
