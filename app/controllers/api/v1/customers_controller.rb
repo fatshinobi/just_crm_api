@@ -6,20 +6,14 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
 
   def show
     customer = Customer.find(params[:id])
-    render json: {
-      id: customer.id.to_s,
-      name: customer.name
-    }, status: :ok
+    render json: CustomerRepresenter.new(customer).as_json, status: :ok
   end
 
   def create
     customer = Customer.new(name: customer_params[:name], user: current_api_v1_user)
 
     if customer.save
-      render json: { 
-        id: customer._id.to_s,
-        name: customer.name
-      }, status: :created
+      render json: CustomerRepresenter.new(customer).as_json, status: :created
     else
       render json: customer.errors, status: :unprocessable_entity
     end
@@ -30,10 +24,7 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
     customer.assign_attributes(customer_params)
 
     if customer.save
-      render json: { 
-        id: customer._id.to_s,
-        name: customer.name
-      }, status: :accepted
+      render json: CustomerRepresenter.new(customer).as_json, status: :accepted
     else
       render json: customer.errors, status: :unprocessable_entity
     end
