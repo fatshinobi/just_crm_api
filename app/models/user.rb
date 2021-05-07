@@ -50,6 +50,8 @@ class User
   ## Tokens
   field :tokens, type: Hash, default: {}
 
+  field :name, type: String
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

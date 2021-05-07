@@ -4,5 +4,6 @@ FactoryBot.define do
     sequence(:email) {|n| "test_#{n}@test.com"}
     password { Faker::Internet.password }
     provider { "email" }
+    name { Faker::Name.name }
   end
 end
