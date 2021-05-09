@@ -5,6 +5,9 @@ class Customer
   include Conditionable, HasUser
 
   field :name, type: String
+  field :about, type: String
+  field :phone, type: String
+  field :web, type: String
 
   embeds_many :people
 

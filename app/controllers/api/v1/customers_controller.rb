@@ -10,7 +10,8 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
   end
 
   def create
-    customer = Customer.new(name: customer_params[:name], user: current_api_v1_user)
+    #customer = Customer.new(name: customer_params[:name], user: current_api_v1_user)
+    customer = Customer.new(customer_params)
 
     if customer.save
       render json: CustomerRepresenter.new(customer).as_json, status: :created
@@ -41,6 +42,6 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:id, :name)
+    params.require(:customer).permit(:id, :name, :about, :phone, :web, :user_id)
   end
 end

@@ -35,14 +35,19 @@ RSpec.describe "Customers", :type => :request do
     it 'returns right record' do
       expect(JSON.parse(response.body)).to eq ({
         'id' => @customer.id.to_s,
-        'name' => 'test 1'
+        'name' => 'test 1',
+        'about' => @customer.about,
+        'phone' => @customer.phone,
+        'web' => @customer.web,
+        'user_id' => @customer.user.id.to_s
       })
     end
   end
 
   describe 'post /api/v1/customers' do
     before do
-      post '/api/v1/customers', params: { customer: {name: 'test name 1'} }, headers: @auth_headers
+      @curator = FactoryBot.create(:user)
+      post '/api/v1/customers', params: { customer: {name: 'test name 1', about: 'test about', phone: 'test phone', web: 'test.com', user_id: @curator.id} }, headers: @auth_headers
       @customer = Customer.first
     end
 
@@ -57,7 +62,11 @@ RSpec.describe "Customers", :type => :request do
     it 'returns right record' do
       expect(JSON.parse(response.body)).to eq ({
         'id' => @customer.id.to_s,
-        'name' => 'test name 1'
+        'name' => 'test name 1',
+        'about' => 'test about',
+        'phone' => 'test phone',
+        'web' => 'test.com',
+        'user_id' => @curator.id.to_s
       })
     end
 
@@ -65,8 +74,9 @@ RSpec.describe "Customers", :type => :request do
 
   describe 'patch /api/v1/customers' do
     before do
+      @curator = FactoryBot.create(:user)
       @customer = FactoryBot.create(:customer, name: 'test 1')
-      patch "/api/v1/customers/#{@customer._id.to_s}", params: { customer: {name: 'test 2'} }, headers: @auth_headers
+      patch "/api/v1/customers/#{@customer._id.to_s}", params: { customer: {name: 'test 2', about: 'test about', phone: 'test phone', web: 'test.com', user_id: @curator.id} }, headers: @auth_headers
     end
 
     it 'returns created' do
@@ -81,7 +91,11 @@ RSpec.describe "Customers", :type => :request do
     it 'returns right record' do
       expect(JSON.parse(response.body)).to eq ({
         'id' => @customer.id.to_s,
-        'name' => 'test 2'
+        'name' => 'test 2',
+        'about' => 'test about',
+        'phone' => 'test phone',
+        'web' => 'test.com',
+        'user_id' => @curator.id.to_s
       })
     end
 
